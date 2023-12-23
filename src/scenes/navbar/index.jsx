@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate, Link } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
-import Logo from "../../../public/favicon.png";
+import Logo from "./favicon.png";
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
