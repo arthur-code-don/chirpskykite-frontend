@@ -1,13 +1,91 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.cdnfonts.com/css/mortal-kombat');
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width:  100%;
+  font-family: "mortal kombat 4", sans-serif;
+  /* overflow-y: hidden; */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.upload-img-text {
+  text-align: center;
+}
+
+@media (min-width: 1000px) {
+  .post-widget-container {
+    /* Add your desired styles here */
+    /* Example styles: */
+    max-width: 750px;
+    margin: 1rem auto;
+  }
+}
+
+.shithead:hover{
+  cursor: pointer;
+}
+
+img {
+  max-width: 700px;
+  max-height: 500px;
+}
+
+
+
+strong > span{
+
+  color: skyblue;
+  font-size: 2.5rem;
+}
+
+
+
+strong:hover{
+  color: #8a0303;
+}
+
+.upload-vid-text {
+  text-align:  center;
+  color: skyblue;
+}
+
+.upload-vid-text:hover {
+  color: #8a0303;
+}
+
+
+.kharacters {
+  font-size: 1rem;
+  color: #8a0303;
+}
+
+ video {
+  max-width: 700px;
+  max-height: 500px;
+} 
+
+.message {
+  background-color: red !important; /* Background color for the message */
+  color: black; /* Text color for the message */
+  padding: 10px; /* Padding for the message */
+  border: 12px solid blue; /* Border for the message */
+  border-radius: 5px; /* Border radius for the message */
+  margin: 10px 0; /* Margin for spacing */
+  text-align: center;
+  justify-content: center;
+}
+
+
+
+.current-events {
+  text-align: center;
+  color: red;
+}
+
+.scroll-to-top-button {
+  float: right;
+  background-color: skyblue;
+  color: #8a0303;
 }
