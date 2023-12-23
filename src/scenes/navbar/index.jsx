@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate, Link } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
-
+import Logo from "../../../public/favicon.png";
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ const Navbar = () => {
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
+      <img src={Logo} alt="Chirpsky Logo" style={{ height: '40px', marginRight: '10px' }} /> 
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
