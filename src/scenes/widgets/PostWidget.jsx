@@ -197,7 +197,7 @@ const PostWidget = ({
 
   // Update patchLike to set likes for posts
   const patchLike = async () => {
-    const response = await fetch(`https://chirpskykite-server.onrender.com/${postId}/like`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
