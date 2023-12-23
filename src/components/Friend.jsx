@@ -64,7 +64,7 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
   
   const handleDeletePost = async () => {
     try {
-      const response = await fetch(`https://chirpskykite-server/posts/${postId}`, {
+      const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
   
 const patchFriend = async () => {
   try {
-    const response = await fetch(`https://chirpskykite-server/users/${_id}/${friendId}`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/users/${_id}/${friendId}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,

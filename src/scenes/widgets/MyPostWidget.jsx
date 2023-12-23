@@ -123,7 +123,7 @@ const MyPostWidget = ({ picturePath, videoPath }) => {
     }
   
     try {
-      const response = await fetch(`https://chirpskykite-server/posts/`, {
+      const response = await fetch(`https://chirpskykite-server.onrender.com/posts/`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

@@ -72,7 +72,7 @@ const handleSocialProfileChange = async (index, newValue) => {
     setEditValue(newEditValue);
 
     // Update the backend with the new social profiles
-    const response = await fetch(`https://chirpskykite-server/users/${userId}/social-profiles`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/users/${userId}/social-profiles`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ const handleSocialProfileChange = async (index, newValue) => {
 
   const getUser = async () => {
     try {
-      const response = await fetch(`https://chirpskykite-server/users/${userId}`, {
+      const response = await fetch(`https://chirpskykite-server.onrender.com/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });

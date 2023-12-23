@@ -89,7 +89,7 @@ const PostWidget = ({
     }
 
     try {
-      const response = await fetch(`https://chirpskykite-server/posts/${postId}`, {
+      const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ const PostWidget = ({
   // FETCH VIDEO POSTS ALSO
   const fetchPosts = async () => {
     try {
-      const response = await fetch("https://chirpskykite-server/posts");
+      const response = await fetch("https://chirpskykite-server.onrender.com/posts");
       if (response.ok) {
         const updatedPosts = await response.json();
         setPosts(updatedPosts);
@@ -197,7 +197,7 @@ const PostWidget = ({
 
   // Update patchLike to set likes for posts
   const patchLike = async () => {
-    const response = await fetch(`https://chirpskykite-server/posts/${postId}/like`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -215,7 +215,7 @@ const PostWidget = ({
   // Update patchLikeComment to set likes for comments
   const patchLikeComment = async (commentId) => {
     try {
-      const response = await fetch(`https://chirpskykite-server/posts/${postId}/like-comment`, {
+      const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}/like-comment`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -246,7 +246,7 @@ const PostWidget = ({
 
 
   const patchHate = async () => {
-    const response = await fetch(`https://chirpskykite-server/posts/${postId}/hate`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}/hate`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -260,7 +260,7 @@ const PostWidget = ({
 
 
   const patchBoomerang = async () => {
-    const response = await fetch(`https://chirpskykite-server/posts/${postId}/boomerang`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}/boomerang`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -292,7 +292,7 @@ const PostWidget = ({
 
     };
 
-    const response = await fetch(`https://chirpskykite-server/posts/${postId}/comment`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}/comment`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -358,7 +358,7 @@ const PostWidget = ({
 
     };
 
-    const response = await fetch(`https://chirpskykite-server/posts/${postId}/comment-reply`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${postId}/comment-reply`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -468,7 +468,7 @@ const PostWidget = ({
               height="auto"
               alt="post"
               style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-              src={`https://chirpskykite-server/assets/${picturePath}`}
+              src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
             />
           )}
 
@@ -482,7 +482,7 @@ const PostWidget = ({
               autoplay
               muted
             >
-              <source src={`https://chirpskykite-server/assets/${videoPath}`} />
+              <source src={`https://chirpskykite-server.onrender.com/assets/${videoPath}`} />
               Your browser does not support the video format.
             </video>
           )}
