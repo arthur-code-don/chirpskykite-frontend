@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": "https://chirpskykite-frontend.onrender.com",
+  "homepage": "https://chirpsky.net",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
