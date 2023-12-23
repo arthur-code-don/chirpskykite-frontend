@@ -95,6 +95,7 @@ const Form = () => {
       {
         method: "POST",
         body: formData,
+        credentials: 'include',
       }
     );
     const savedUser = await savedUserResponse.json();
@@ -110,7 +111,8 @@ const Form = () => {
     const loggedInResponse = await fetch("https://chirpskykite-server.onrender.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values)
+      body: JSON.stringify(values),
+      credentials: 'include',
     });
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
