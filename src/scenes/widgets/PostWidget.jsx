@@ -10,7 +10,8 @@ import {
   DeleteOutlined,
 } from "@mui/icons-material";
 import { Icon } from '@iconify/react';
-import { Box, Divider, IconButton, Typography, useTheme, Tooltip, TextField, Button } from "@mui/material";
+import { Box, Divider, IconButton, Dialog, Typography, useTheme, Tooltip, TextField, Button, DialogContent } from "@mui/material";
+import { Close as CloseIcon } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -47,6 +48,34 @@ const PostWidget = ({
   const [isComments, setIsComments] = useState(false);
   const [isCommentsReply, setIsCommentsReply] = useState(false);
 
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
+
+  const [zoomLevel, setZoomLevel] = useState(1);
+
+
+  const handleImageDialogOpen = () => {
+    setIsImageDialogOpen(true);
+  };
+
+  const handleVideoClick = () => {
+    setIsVideoDialogOpen(true);
+  };
+
+  const handleImageDialogClose = () => {
+    setZoomLevel(1);
+    setIsImageDialogOpen(false);
+  };
+
+  const handleVideoDialogClose = () => {
+    setIsVideoDialogOpen(false);
+  };
+
+
+  const handleImageWheel = (e) => {
+    setZoomLevel((prevZoom) => prevZoom + (e.deltaY > 0 ? -0.1 : 0.1));
+    e.preventDefault();
+  };
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
@@ -464,20 +493,22 @@ const PostWidget = ({
 
           {picturePath && (
             <img
+              onClick={handleImageDialogOpen}
               width="100%"
               height="auto"
               alt="post"
-              style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+              style={{ borderRadius: "0.75rem", marginTop: "0.75rem", cursor: "pointer" }}
               src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
             />
           )}
 
           {videoPath && (
             <video
+              onClick={handleVideoClick}
               width="100%"
               height="auto"
               alt="video not available!"
-              style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+              style={{ borderRadius: "0.75rem", marginTop: "0.75rem", cursor: "pointer" }}
               controls
               autoplay
               muted
@@ -486,6 +517,57 @@ const PostWidget = ({
               Your browser does not support the video format.
             </video>
           )}
+
+          {/* Image Dialog */}
+          <Dialog open={isImageDialogOpen} onClose={handleImageDialogClose} sx={{ overflow: "hidden" }} onWheel={handleImageWheel}>
+            <DialogContent sx={{ maxWidth: '90vw', maxHeight: '90vh', overflow: "hidden" }}>
+              <Box position="absolute" top={0} right={0}>
+                <Tooltip title="Close">
+                  <IconButton onClick={handleImageDialogClose}>
+                    <CloseIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <img
+                width="100%"
+                height="auto"
+                alt="post"
+                src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
+                style={{ 
+                  objectFit: 'contain', 
+                  width: '100%', 
+                  height: '100%', 
+                  transform: `scale(${zoomLevel})`, // Apply zoom level
+                }}
+              />
+            </DialogContent>
+          </Dialog>
+
+          {/* Video Dialog */}
+          <Dialog open={isVideoDialogOpen} onClose={handleVideoDialogClose}>
+            <DialogContent sx={{ maxWidth: '90vw', maxHeight: '90vh' }}>
+              <Box position="absolute" top={0} right={0}>
+                <Tooltip title="Close">
+                  <IconButton onClick={handleVideoDialogClose}>
+                    <CloseIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <video
+                width="100%"
+                height="auto"
+                alt="video not available!"
+                controls
+                autoplay
+                muted
+                style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+              >
+                <source src={`https://chirpskykite-server.onrender.com/assets/${videoPath}`} />
+                Your browser does not support the video format.
+              </video>
+            </DialogContent>
+          </Dialog>
+
 
 
           {/* Display the formatted timestamp */}

@@ -5,6 +5,11 @@ const initialState = {
   user: null,
   token: null,
   posts: [],
+  snackbar: {
+    open: null,
+    message: null,
+    severity: null,
+  },
 };
 
 export const authSlice = createSlice({
@@ -36,6 +41,21 @@ export const authSlice = createSlice({
       }
       return state;
     },
+    openSnackbar(state, action) {
+      state.snackbar.open = true;
+      state.snackbar.severity = action.payload.severity;
+      state.snackbar.message = action.payload.message;
+    },
+    closeSnackbar(state, action) {
+      state.snackbar.open = false;
+      state.snackbar.severity = null;
+      state.snackbar.message = null;
+
+      
+    },
+
+
+
     setMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
     },
@@ -46,15 +66,24 @@ export const authSlice = createSlice({
     setLogout: (state) => {
       state.user = null;
       state.token = null;
+
     },
+    // setFriends: (state, action) => {
+    //   if (state.user) {
+    //     state.user.friends = action.payload.friends;
+    //   } else if (action.payload && action.payload.error) {
+    //     console.error("user friends non-existent :(");
+    //     console.error("Error updating user friends:", action.payload.error);
+    //   }
+    // },
+
     setFriends: (state, action) => {
-      if (state.user) {
-        state.user.friends = action.payload.friends;
-      } else {
-        console.error("user friends non-existent :(");
-        console.error("Error updating user friends:", action.payload.error);
-      }
+      state.user.friends = action.payload.friends;
+      // Also, update isFriend based on the action
+      state.isFriend = action.payload.isFriend;
     },
+  
+    
     deletePost: (state, action) => {
       const postIdToDelete = action.payload; // Pass the post ID to delete
       state.posts = state.posts.filter((post) => post._id !== postIdToDelete);
@@ -67,7 +96,7 @@ export const authSlice = createSlice({
         if (post._id === action.payload.post._id) return action.payload.post;
         return post;
       });
-      
+
       state.posts = updatedPosts;
     },
     setComments: (state, action) => {
@@ -78,35 +107,54 @@ export const authSlice = createSlice({
         if (comment._id === action.payload.comment._id) return action.payload.comment;
         return comment;
       });
-      
+
       state.comments = updatedComments;
     },
 
-},
+  },
 
 
-setCommentReplies: (state, action) => {
-  // Assuming action.payload.commentId is the ID of the parent comment
-  const { commentId, replies } = action.payload;
-  
-  const updatedComments = state.comments.map((comment) => {
-    if (comment._id === commentId) {
-      return { ...comment, replies };
-    }
-    return comment;
-  });
+  setCommentReplies: (state, action) => {
+    // Assuming action.payload.commentId is the ID of the parent comment
+    const { commentId, replies } = action.payload;
 
-  state.comments = updatedComments;
-},
-  
+    const updatedComments = state.comments.map((comment) => {
+      if (comment._id === commentId) {
+        return { ...comment, replies };
+      }
+      return comment;
+    });
+
+    state.comments = updatedComments;
+  },
+
 });
 
 
 
+export function showSnackbar({ severity, message }) {
+  return async (dispatch, getState ) => {
+    dispatch(
+      authSlice.actions.openSnackbar( {
+      message, severity
+    })
+  );
+setTimeout(() => {
+  dispatch(
+    authSlice.actions.closeSnackbar());
+}, 4000);
+
+
+  };
+}
+
+export const closeSnackbar = () => async (dispatch, getState) => {
+  dispatch(authSlice.actions.closeSnackbar());
+};
 
 
 
 
-export const { incrementViewedProfile, incrementImpressions, setMode, setLogin, setLogout, setFriends, setPosts, setPost, deletePost, setComments, setComment,   setCommentReplies, setCommentReply  } =
+export const { incrementViewedProfile, incrementImpressions, setMode, setLogin, setLogout, setFriends, setPosts, setPost, deletePost, setComments, setComment, setCommentReplies, setCommentReply } =
   authSlice.actions;
 export default authSlice.reducer;

@@ -1,21 +1,37 @@
 import { PersonAddOutlined, PersonRemoveOutlined, DeleteOutline } from "@mui/icons-material";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Snackbar, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setFriends, deletePost } from "state";
+import { setFriends, deletePost, showSnackbar } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import React, { useState } from "react";
+import MuiAlert from '@mui/material/Alert';
+import state, { closeSnackbar } from "state";
 import "index.css";
+
+
+const vertical = "bottom";
+const horizontal = "center";
+
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 
 const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId }) => {
+  // const { open, message, severity } = useSelector((state) => state.snackbar);
+
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
+  
 
   // console.log("Friend data:", { friendId, name, username, subtitle, userPicturePath, postId });
 
@@ -25,8 +41,10 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-  const [message, setMessage] = useState(null);
 
+  // const handleCloseSnackbar = () => {
+  //   setMessage(null);
+  // };
 
    // Perform null or undefined checks
   //  if (
@@ -55,8 +73,9 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
   
 
   const isFriend =
-    Array.isArray(friends) &&
-    friends.find((friend) => friend && friend._id === friendId); // Add null check here
+  Array.isArray(friends) &&
+  friends.find((friend) => friend && friend._id === friendId) !== undefined;
+// Add null check here
   const isLoggedUser = friendId === _id;
 
 
@@ -75,46 +94,68 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
         // Delete post from UI or trigger a refresh of the posts
         // e.g., dispatch an action to update the posts state
         dispatch(deletePost(postId)); // Assuming you have a deletePost action
-        alert('Post deleted successfully.');
-        // console.log("Post deleted successfully.");
+        dispatch(showSnackbar({ severity: "success", message: "Post Successfully Deleted" }));
+                // console.log("Post deleted successfully.");
       } else {
-        setMessage('Failed to delete Post.');
+        dispatch(showSnackbar({ severity: "error", message: "Epic Fail. Please Try again in a few minutes" }));
         console.log("Failed to delete Post.");
       }
     } catch (error) {
-      setMessage('Error deleting the post: ' + error.message);
+      dispatch(showSnackbar({ severity: "error", message: "Epic Fail. Please Try again in a few minutes" }));
       console.error("Error deleting the post:", error);
     }
     // console.log(message)
   };
   
+  const patchFriend = async () => {
+    try {
+      const action = isFriend ? "remove" : "add";
+      console.log(`Before PATCH - isFriend: ${isFriend}, action: ${action}`);
   
-const patchFriend = async () => {
-  try {
-    const response = await fetch(`https://chirpskykite-server.onrender.com/users/${_id}/${friendId}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ action: isFriend ? "remove" : "add" }), // Specify the action
-    });
+      const response = await fetch(`https://chirpskykite-server.onrender.com/users/${_id}/${friendId}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action }), // Specify the action
+      });
+  
+      console.log("Patch response:", response);
+  
+      if (response.ok) {
+        const data = await response.json();
+  
+        console.log("Patch data:", data);
+  
+        if (action === "remove") {
+          dispatch(showSnackbar({ severity: "success", message: "Friend removed successfully" }));
+        } else {
+          dispatch(showSnackbar({ severity: "success", message: "You are now Friends" }));
+        }
+  
+        // Update isFriend based on the action
+        const updatedFriends = data;
+        const updatedIsFriend = action === "add";
+        console.log(`After PATCH - updatedIsFriend: ${updatedIsFriend}, updatedFriends:`, updatedFriends);
+  
+        // Dispatch the setFriends action with the updated information
+        dispatch(setFriends({ friends: updatedFriends, isFriend: updatedIsFriend }));
+        // dispatch(setFriends({ friends: data, isFriend: updatedIsFriend, friendId: friendId }));
 
-    if (response.ok) {
-      const data = await response.json();
-      dispatch(setFriends({ friends: data }));
-    } else {
-      setMessage(`Failed to ${isFriend ? "remove" : "add"} friend.`);
-      console.log(`Failed to ${isFriend ? "remove" : "add"} friend.`);
+      } else {
+        dispatch(showSnackbar({ severity: "error", message: `Failed to ${action} friend.` }));
+        console.log(`Failed to ${action} friend.`);
+      }
+    } catch (error) {
+      dispatch(showSnackbar({ severity: "error", message: `Failed to ${isFriend ? "remove" : "add"} friend. Error: ${error.message}` }));
+      console.error(`Error ${isFriend ? "removing" : "adding"} friend:`, error);
     }
-  } catch (error) {
-    setMessage(`Error ${isFriend ? "removing" : "adding"} friend: ${error.message}`);
-    console.error(`Error ${isFriend ? "removing" : "adding"} friend:`, error);
-  }
-};
-
-
-
+  };
+  
+  
+  
+  
 
   // const patchFriend = async () => {
   //   const response = await fetch(
@@ -136,23 +177,6 @@ const patchFriend = async () => {
  
   return (
     <div> 
-    {message && (
-      <div
-        className="message"
-        style={{
-          backgroundColor: "red",
-          fontSize: "96px",
-          color: "black",
-          padding: "10px",
-          border: "12px solid blue",
-          borderRadius: "5px",
-          margin: "10px 0",
-        }}
-      >
-        {message}
-      </div>
-    )}
-    
     <FlexBetween>
     <FlexBetween gap="1rem">
       <UserImage image={userPicturePath} size="55px" />

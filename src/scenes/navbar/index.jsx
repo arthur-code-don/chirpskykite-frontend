@@ -10,6 +10,12 @@ import {
   useTheme,
   useMediaQuery,
   Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Stack,
 } from "@mui/material";
 import {
   Search,
@@ -26,8 +32,13 @@ import { setMode, setLogout } from "state";
 import { useNavigate, Link } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import Logo from "./favicon.png";
+import LogoSeal from "./logo.png";
+import { FaEthereum } from "react-icons/fa6";
+
+import DOI from "./DOI.png"
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [isHelpDialogOpen, setIsHelpDialogOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -45,11 +56,19 @@ const Navbar = () => {
   const username = `@${user.username}`;
 
 
+  const handleHelpDialogOpen = () => {
+    setIsHelpDialogOpen(true);
+  };
+
+  const handleHelpDialogClose = () => {
+    setIsHelpDialogOpen(false);
+  };
+
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
-      <img src={Logo} alt="Chirpsky Logo" style={{ height: '40px', marginRight: '10px' }} /> 
+        <img src={Logo} alt="Chirpsky Logo" style={{ height: '40px', marginRight: '10px' }} />
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -94,15 +113,22 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
+          <a href="https://www.chirpskyXChange.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <Tooltip title="ChirpskyXChange ♦">
+              <IconButton>
+                <FaEthereum sx={{ fontSize: "25px" }} />
+              </IconButton>
+            </Tooltip>
+          </a>
           <a href="https://www.chirpskykite.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-          <Tooltip title="ChirpskyKite">
-            <IconButton>
-              <Message sx={{ fontSize: "25px" }} />
-            </IconButton>
+            <Tooltip title="ChirpskyKite">
+              <IconButton>
+                <Message sx={{ fontSize: "25px" }} />
+              </IconButton>
             </Tooltip>
           </a>
           <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
+          <Tooltip title="Koming Soon"> <Help sx={{ fontSize: "25px", cursor: "pointer" }} onClick={handleHelpDialogOpen} /></Tooltip>
           <FormControl variant="standard" value={username}>
             <Select
               value={username}
@@ -183,15 +209,22 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
+            <a href="https://www.chirpskyXChange.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <Tooltip title="ChirpskyXChange ♦">
+              <IconButton>
+                <FaEthereum sx={{ fontSize: "25px" }} />
+              </IconButton>
+            </Tooltip>
+          </a>
             <a href="https://www.chirpskykite.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
               <Tooltip title="ChirpskyKite">
-              <IconButton>
-                <Message sx={{ fontSize: "25px" }} />
-              </IconButton>
+                <IconButton>
+                  <Message sx={{ fontSize: "25px" }} />
+                </IconButton>
               </Tooltip>
             </a>
             <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            <Tooltip title="Koming Soon"> <Help sx={{ fontSize: "25px", cursor: "pointer" }} onClick={handleHelpDialogOpen} /></Tooltip>
             <FormControl variant="standard" value={username}>
               <Select
                 value={username}
@@ -227,10 +260,66 @@ const Navbar = () => {
                 </MenuItem>
               </Select>
             </FormControl>
+
+
           </FlexBetween>
+
+
         </Box>
+
+
       )}
+
+
+      {/* HELP DIALOG */}
+      <Dialog open={isHelpDialogOpen} onClose={handleHelpDialogClose} maxWidth="md" fullWidth>
+        <DialogTitle style={{ textAlign: "center", color: "#1DA1F2", fontFamily: 'MuRdOiNk' }}>
+          {/* title */}
+          Welcome to Chirpsky
+        </DialogTitle>
+        <DialogContent>
+          Please make yourselves at home, while many features are still being built, you could expect some things might not function as intended, but rest assured... if there is a demand for certain features, and what might you like to have in a social networking platform, please leave a post or comment of what you want. I truly care about more than myself.
+          <Box
+            sx={{
+              backgroundImage: `url(${DOI})`,
+              backgroundSize: "cover",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              textAlign: "center",
+              minHeight: "500px",
+              position: "relative", // Make the position relative
+            }}
+
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: "50%", // Adjust these values for logo positioning
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "170px", // Adjust the width of the logo
+                height: "170px", // Adjust the height of the logo
+                backgroundImage: `url(${LogoSeal})`, // Replace with the path to your logo
+                backgroundSize: "cover",
+                zIndex: 1,
+              }}
+            />  <Typography mt={33} variant="h5" style={{ textAlign: "center", color: "red", fontSize: "16px" }}>"Government is not reason, it is not eloquence, it is force; like fire, a troublesome servant and a fearful master."
+              "Happiness and moral duty are inseparably connected." - George Washington</Typography>
+
+          </Box>
+
+
+          <Typography variant="h5" style={{ textAlign: "center", color: "#1DA1F2", zIndex: 2 }}>Freedom is Just. Freedom is Just. Freedom is Just a click away.</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleHelpDialogClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </FlexBetween>
+
   );
 };
 

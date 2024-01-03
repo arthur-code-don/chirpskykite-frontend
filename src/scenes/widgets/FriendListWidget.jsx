@@ -38,7 +38,7 @@ const FriendListWidget = ({ userId }) => {
 
   useEffect(() => {
     getFriends();
-  }, [userId, token]); // Include userId and token in the dependency array
+  }, [userId, token, friends]); // Include userId and token in the dependency array
   return (
     <WidgetWrapper
     >

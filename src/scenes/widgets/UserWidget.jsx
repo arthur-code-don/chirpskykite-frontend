@@ -32,7 +32,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
   // const socialProfiles 
   const socialProfiles = [
-    { platform: "TwiXter", description: "Social Network", icon: "../assets/twitter.png" },
+    { platform: "TwiXter", description: "Town Square", icon: "../assets/twitter.png" },
     { platform: "LinkedIn", description: "Strictly Business", icon: "../assets/linkedin.png" },
     { platform: "Personal",description: <>Q: Who am I?<br />¡ʎʞs ǝɥʇ oʇ ʞoo˥ :∀</>, icon: "../assets/tbird.png" },  ];
 

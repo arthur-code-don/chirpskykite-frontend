@@ -186,7 +186,7 @@ const MyPostWidget = ({ picturePath, videoPath }) => {
     >
       
       <FlexBetween 
-      gap="1.5rem">
+      gap="1.5rem" flexDirection="column-reverse">
         <Linkify>
 
         <InputBase

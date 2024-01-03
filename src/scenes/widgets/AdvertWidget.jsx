@@ -31,16 +31,16 @@ const AdvertWidget = () => {
         </Typography>
       
         <a
-          href="https://www.yourbridgeplan.com/youtube"
+          href="https://www.yourbridgeplan.com"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: medium }}
         >
-          https://www.yourbridgeplan.com/youtube
+          https://www.yourbridgeplan.com
         </a>
       </div>
       <Typography color={medium} m="0.5rem 0">
-        In honor of keeping it real, I bring you one of the only news sources i tune into. As you can see I am labeling this segment 'Current Events' Because our currency is currently not curing me.🌊🐋
+        I bring you one of the only news sources i tune into. As you can see I am labeling this segment 'Current Events' Because our currency is currently not curing me.🌊🐋
       </Typography>
     </WidgetWrapper>
   );
