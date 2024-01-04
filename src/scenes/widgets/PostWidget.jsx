@@ -498,7 +498,7 @@ const PostWidget = ({
               height="auto"
               alt="post"
               style={{ borderRadius: "0.75rem", marginTop: "0.75rem", cursor: "pointer" }}
-              src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
+              src={`/assets/${picturePath}`}
             />
           )}
 
@@ -513,7 +513,7 @@ const PostWidget = ({
               autoplay
               muted
             >
-              <source src={`https://chirpskykite-server.onrender.com/assets/${videoPath}`} />
+              <source src={`/assets/${videoPath}`} />
               Your browser does not support the video format.
             </video>
           )}
@@ -532,7 +532,7 @@ const PostWidget = ({
                 width="100%"
                 height="auto"
                 alt="post"
-                src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
+                src={`/assets/${picturePath}`}
                 style={{ 
                   objectFit: 'contain', 
                   width: '100%', 
@@ -562,7 +562,7 @@ const PostWidget = ({
                 muted
                 style={{ objectFit: 'contain', width: '100%', height: '100%' }}
               >
-                <source src={`https://chirpskykite-server.onrender.com/assets/${videoPath}`} />
+                <source src={`../../assets/${videoPath}`} />
                 Your browser does not support the video format.
               </video>
             </DialogContent>
