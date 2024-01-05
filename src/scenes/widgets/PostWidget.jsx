@@ -130,13 +130,13 @@ const PostWidget = ({
         // e.g., dispatch an action to update the posts state
         dispatch(deletePost(postId));
         setMessage('Post deleted successfully.');
-        console.log('Post deleted successfully.');
+        // console.log('Post deleted successfully.');
         // After a successful delete, you can also remove the deleted post from the state
         setPosts(posts.filter((post) => post._id !== postId));
         fetchPosts(); // Refresh the list of posts after deletion
       } else {
         setMessage('Failed to delete the post.');
-        console.log('Failed to delete the post.');
+        // console.log('Failed to delete the post.');
       }
     } catch (error) {
       setMessage('Error deleting the post: ' + error.message);
@@ -147,7 +147,7 @@ const PostWidget = ({
   // FETCH VIDEO POSTS ALSO
   const fetchPosts = async () => {
     try {
-      const response = await fetch("https://chirpskykite-server.onrender.com/posts");
+      const response = await fetch("https://chirpskykite-server.onrender.com/posts/");
       if (response.ok) {
         const updatedPosts = await response.json();
         setPosts(updatedPosts);
@@ -334,7 +334,7 @@ const PostWidget = ({
     });
 
     const updatedPost = await response.json();
-    console.log("Updated Post:", updatedPost);
+    // console.log("Updated Post:", updatedPost);
 
     // Check if updatedPost.comments is an array before sorting
     const sortedComments = Array.isArray(updatedPost.comments)
@@ -400,7 +400,7 @@ const PostWidget = ({
     });
 
     const updatedPost = await response.json();
-    console.log("Updated Post:", updatedPost);
+    // console.log("Updated Post:", updatedPost);
 
     // Check if updatedPost.comments is an array before sorting
     const sortedComments = Array.isArray(updatedPost.comments)
@@ -498,7 +498,7 @@ const PostWidget = ({
               height="auto"
               alt="post"
               style={{ borderRadius: "0.75rem", marginTop: "0.75rem", cursor: "pointer" }}
-              src={`/assets/${picturePath}`}
+              src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
             />
           )}
 
@@ -513,7 +513,7 @@ const PostWidget = ({
               autoplay
               muted
             >
-              <source src={`/assets/${videoPath}`} />
+              <source src={`https://chirpskykite-server.onrender.com/assets/${videoPath}`} />
               Your browser does not support the video format.
             </video>
           )}
@@ -532,7 +532,7 @@ const PostWidget = ({
                 width="100%"
                 height="auto"
                 alt="post"
-                src={`/assets/${picturePath}`}
+                src={`https://chirpskykite-server.onrender.com/assets/${picturePath}`}
                 style={{ 
                   objectFit: 'contain', 
                   width: '100%', 
@@ -562,7 +562,7 @@ const PostWidget = ({
                 muted
                 style={{ objectFit: 'contain', width: '100%', height: '100%' }}
               >
-                <source src={`../../assets/${videoPath}`} />
+                <source src={`https://chirpskykite-server.onrender.com/assets/${videoPath}`} />
                 Your browser does not support the video format.
               </video>
             </DialogContent>

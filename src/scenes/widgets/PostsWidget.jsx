@@ -33,7 +33,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
     // ADD ROUTE FOR VIDEO ALSO
   const getUserPosts = async () => {
-    const response = await fetch(`https://chirpskykite-server.onrender.com/posts`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -59,7 +59,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       getPosts();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  console.log(posts);
+  // console.log(posts);
   //console.log(formattedTimestamp)
 
   return (

@@ -105,7 +105,7 @@ const handleSocialProfileChange = async (index, newValue) => {
       return updatedUser;
     });
 
-    console.log(`Updated social profile at index ${index}:`, newValue);
+    // console.log(`Updated social profile at index ${index}:`, newValue);
   } catch (error) {
     console.error('Error updating social profiles:', error);
     // Handle error appropriately

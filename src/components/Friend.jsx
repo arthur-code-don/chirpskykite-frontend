@@ -110,7 +110,7 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
   const patchFriend = async () => {
     try {
       const action = isFriend ? "remove" : "add";
-      console.log(`Before PATCH - isFriend: ${isFriend}, action: ${action}`);
+      // console.log(`Before PATCH - isFriend: ${isFriend}, action: ${action}`);
   
       const response = await fetch(`https://chirpskykite-server.onrender.com/users/${_id}/${friendId}`, {
         method: "PATCH",
@@ -121,12 +121,12 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
         body: JSON.stringify({ action }), // Specify the action
       });
   
-      console.log("Patch response:", response);
+      // console.log("Patch response:", response);
   
       if (response.ok) {
         const data = await response.json();
   
-        console.log("Patch data:", data);
+        // console.log("Patch data:", data);
   
         if (action === "remove") {
           dispatch(showSnackbar({ severity: "success", message: "Friend removed successfully" }));
@@ -137,7 +137,7 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
         // Update isFriend based on the action
         const updatedFriends = data;
         const updatedIsFriend = action === "add";
-        console.log(`After PATCH - updatedIsFriend: ${updatedIsFriend}, updatedFriends:`, updatedFriends);
+        // console.log(`After PATCH - updatedIsFriend: ${updatedIsFriend}, updatedFriends:`, updatedFriends);
   
         // Dispatch the setFriends action with the updated information
         dispatch(setFriends({ friends: updatedFriends, isFriend: updatedIsFriend }));
@@ -145,7 +145,7 @@ const Friend = ({ friendId, name, username, subtitle, userPicturePath, postId })
 
       } else {
         dispatch(showSnackbar({ severity: "error", message: `Failed to ${action} friend.` }));
-        console.log(`Failed to ${action} friend.`);
+        // console.log(`Failed to ${action} friend.`);
       }
     } catch (error) {
       dispatch(showSnackbar({ severity: "error", message: `Failed to ${isFriend ? "remove" : "add"} friend. Error: ${error.message}` }));

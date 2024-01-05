@@ -140,7 +140,7 @@ const Form = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values)
       });
-      console.log("Response Status:", loggedInResponse.status);
+      // console.log("Response Status:", loggedInResponse.status);
   
       const loggedIn = await loggedInResponse.json();
   
@@ -415,7 +415,7 @@ const Form = () => {
               >
                 {isLogin
                   ? "Don't have an account? Sign Up here."
-                  : "Already have an account? Login here."}
+                  : "Already have an account? Sign in here."}
               </Typography>
             </Box>
           </form>

@@ -129,12 +129,12 @@ const MyPostWidget = ({ picturePath, videoPath }) => {
         body: formData,
       });
   
-      console.log(response);
+      // console.log(response);
   
       // Extract and parse the JSON data from the response body
       const responseData = await response.json();
   
-      console.log(responseData);
+      // console.log(responseData);
   
       setVideo(null);
       setImage(null);
