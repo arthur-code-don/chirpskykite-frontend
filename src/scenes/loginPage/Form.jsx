@@ -114,7 +114,7 @@ const Form = () => {
       const savedUser = await savedUserResponse.json();
       onSubmitProps.resetForm();
   
-      if (savedUserResponse.ok) {
+      if (savedUser) {
         dispatch(showSnackbar({ severity: "success", message: "Registration Successful!" }));
         onSubmitProps.resetForm();
         setPageType("login");
@@ -143,8 +143,8 @@ const Form = () => {
       // console.log("Response Status:", loggedInResponse.status);
   
       const loggedIn = await loggedInResponse.json();
-  
-      if (loggedInResponse.ok) {
+      onSubmitProps.resetForm();
+      if (loggedIn) {
         dispatch(
           setLogin({
             user: loggedIn.user,
@@ -153,7 +153,6 @@ const Form = () => {
         );
         dispatch(showSnackbar({ severity: "success", message: "Login Successful!" }));
         navigate("/home");
-        onSubmitProps.resetForm();
       } else {
         // If response status is not OK, throw an error with the response details
         throw loggedIn;

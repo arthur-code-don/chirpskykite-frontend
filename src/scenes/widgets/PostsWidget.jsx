@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts, setComments } from "state";
+import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 import { format } from "date-fns";
-import { Box, Divider, IconButton, Typography, useTheme, Tooltip, useMediaQuery } from "@mui/material";
 
 // ADD ROUTE FOR VIDEO ALSO
 const PostsWidget = ({ userId, isProfile = false }) => {
@@ -12,7 +11,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const token = useSelector((state) => state.token);
 
   const getPosts = async () => {
-    const response = await fetch("https://chirpskykite-server.onrender.com/posts/", {
+    const response = await fetch("https://chirpskykite-server.onrender.com/posts", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -33,7 +32,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
     // ADD ROUTE FOR VIDEO ALSO
   const getUserPosts = async () => {
-    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/`, {
+    const response = await fetch(`https://chirpskykite-server.onrender.com/posts/${userId}/posts`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -31,7 +31,7 @@ const FriendListWidget = ({ userId }) => {
       const data = await response.json();
       dispatch(setFriends({ friends: data }));
     } catch (error) {
-      console.error("Error fetching friends:", error);
+      // console.error("Error fetching friends:", error);
       // Handle the error appropriately
     }
   };

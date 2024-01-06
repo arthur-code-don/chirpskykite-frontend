@@ -27,7 +27,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import React, { useState } from "react";
 import Linkify from 'react-linkify';
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts, setPost } from "state";
+import { setPosts } from "state";
 
 const MyPostWidget = ({ picturePath, videoPath }) => {
   const dispatch = useDispatch();
