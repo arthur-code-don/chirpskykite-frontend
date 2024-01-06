@@ -7,7 +7,6 @@ import {
   ThumbDownOutlined,
   ThreeSixty,
   ThreeSixtyOutlined,
-  DeleteOutlined,
 } from "@mui/icons-material";
 import { Icon } from '@iconify/react';
 import { Box, Divider, IconButton, Dialog, Typography, useTheme, Tooltip, TextField, Button, DialogContent } from "@mui/material";
@@ -15,12 +14,10 @@ import { Close as CloseIcon } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
-import PostsWidget from "./PostsWidget";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
-import { setPost, setPosts, deletePost, setComment, setComments, SetCommentReply, setCommentsReply, setCommentContent, setReplyContent, setIsLikedComment, } from "state";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { deletePost, setPost } from "state";
 
 import { format } from "date-fns";
 import '../../index.css';

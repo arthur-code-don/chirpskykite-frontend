@@ -34,6 +34,9 @@ import FlexBetween from "components/FlexBetween";
 import Logo from "./favicon.png";
 import LogoSeal from "./logo.png";
 import { FaEthereum } from "react-icons/fa6";
+import '../../index.css';
+
+
 
 import DOI from "./DOI.png"
 const Navbar = () => {
@@ -44,6 +47,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [searchQuery, setSearchQuery] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
 
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
@@ -99,8 +103,49 @@ const Navbar = () => {
             <IconButton >
               <Search />
             </IconButton>
+
+
+
+
           </FlexBetween>
         )}
+        <div>
+          <button
+            style={{
+              backgroundColor: isHovered ? "skyblue" : "#8a0303",
+              border: "none",
+              color: isHovered ? "#8a0303" : "white",
+              textDecoration: "none",
+              padding: "10px 20px",
+              cursor: "pointer",
+              borderRadius: "25px",
+              transition: "background-color 0.3s" // Optional: Add a smooth transition
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <a
+              className="buy-with-crypto"
+              href="https://commerce.coinbase.com/checkout/9d0dbe90-bad6-4b61-847d-f285a1af8f18"
+              target="_blank"
+              rel="noopener"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+                fontSize: "12px",
+                backgroundColor: isHovered ? "skyblue" : "transparent",
+                display: "inline-block",
+              }}
+            >
+              Contribute Crypto
+            </a>
+          </button>
+          <script src="https://commerce.coinbase.com/v1/checkout.js?version=201807"></script>
+        </div>
+
+
+
+
       </FlexBetween>
 
       {/* DESKTOP NAV */}
@@ -210,12 +255,12 @@ const Navbar = () => {
               )}
             </IconButton>
             <a href="https://www.chirpskyXChange.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-            <Tooltip title="ChirpskyXChange ♦">
-              <IconButton>
-                <FaEthereum sx={{ fontSize: "25px" }} />
-              </IconButton>
-            </Tooltip>
-          </a>
+              <Tooltip title="ChirpskyXChange ♦">
+                <IconButton>
+                  <FaEthereum sx={{ fontSize: "25px" }} />
+                </IconButton>
+              </Tooltip>
+            </a>
             <a href="https://www.chirpskykite.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
               <Tooltip title="ChirpskyKite">
                 <IconButton>

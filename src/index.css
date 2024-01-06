@@ -89,3 +89,8 @@ strong:hover{
   background-color: skyblue;
   color: #8a0303;
 }
+
+
+button a.buy-with-crypto {
+  font-family: "Mortal Kombat 4";
+}
