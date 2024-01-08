@@ -22,7 +22,7 @@ const LoginPage = () => {
             color="primary"
             mt="-5px"
             style={{
-              marginLeft: isNonMobileScreens ? "auto" : "120px",
+              marginLeft: isNonMobileScreens ? "auto" : "50px",
               marginRight: isNonMobileScreens ? "auto" : "0", // Center the Typography on mobile screens
             }}
           >

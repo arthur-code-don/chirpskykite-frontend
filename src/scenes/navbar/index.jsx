@@ -84,6 +84,7 @@ const Navbar = () => {
               cursor: "pointer",
             },
           }}
+          style={{ marginLeft: '-33px' }}
         >
           Chirpsky
         </Typography>
