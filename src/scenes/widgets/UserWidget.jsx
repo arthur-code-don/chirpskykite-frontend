@@ -14,8 +14,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { incrementViewedProfile, incrementImpressions } from "state";
-import Friend from "components/Friend";
-
 import '../../index.css'
 import { id } from "date-fns/locale";
 
@@ -34,7 +32,10 @@ const UserWidget = ({ userId, picturePath }) => {
   const socialProfiles = [
     { platform: "TwiXter", description: "Town Square", icon: "../assets/twitter.png" },
     { platform: "LinkedIn", description: "Strictly Business", icon: "../assets/linkedin.png" },
-    { platform: "Personal",description: <>Q: Who am I?<br />¡ʎʞs ǝɥʇ oʇ ʞoo˥ :∀</>, icon: "../assets/tbird.png" },  ];
+    { platform: "Personal",description: <>Q: Who am I?<br />¡ʎʞs ǝɥʇ oʇ ʞoo˥ :∀</>, icon: "../assets/tbird.png" },
+    // { platform: "About Me", description: "Tell us about yourself", icon: "../assets/about.png" },  
+  
+  ];
 
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
@@ -80,7 +81,7 @@ const handleSocialProfileChange = async (index, newValue) => {
       },
       body: JSON.stringify({
         socialProfiles: newEditValue.map((url, i) => ({
-          platform: `Platform ${i + 1}`, // You can adjust the platform name as needed
+          platform: `Platform ${i + 1}`, 
           url: url || '', // If url is falsy, set it to an empty string
         })),
       }),
@@ -111,58 +112,6 @@ const handleSocialProfileChange = async (index, newValue) => {
     // Handle error appropriately
   }
 };
-
-
-// // Function to handle changes when editing social profile
-// const handleSocialProfileChange = async (index, newValue) => {
-//   try {
-//     // Update the backend with the new social profiles
-//     await fetch(`http://localhost:3001/users/${userId}/social-profiles`, {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify({
-//         socialProfiles: editValue.map((url, i) => ({
-//           platform: `Platform ${i + 1}`, // You can adjust the platform name as needed
-//           url,
-//         })),
-//       }),
-//     });
-
-//     // Update the local state
-//     const newEditValue = [...editValue];
-//     newEditValue[index] = newValue;
-//     setEditValue(newEditValue);
-
-//     // Update the user data with the new URL
-//     setUser((prevUser) => {
-//       const updatedUser = { ...prevUser };
-//       if (!updatedUser.socialProfiles) {
-//         updatedUser.socialProfiles = [];
-//       }
-//       if (!updatedUser.socialProfiles[index]) {
-//         updatedUser.socialProfiles[index] = {};
-//       }
-//       updatedUser.socialProfiles[index].url = { url: newValue };
-//       return updatedUser;
-//     });
-
-//     console.log(`Updated social profile at index ${index}:`, newValue);
-//   } catch (error) {
-//     console.error('Error updating social profiles:', error);
-//     // Handle error appropriately
-//   }
-// };
-
-
-
-
-
-
-
-
 
 
 
@@ -332,6 +281,9 @@ const handleSocialProfileChange = async (index, newValue) => {
       placeholder={`Enter new ${profile.platform} link`}
       value={editValue[index]}
       onChange={(e) => handleSocialProfileChange(index, e.target.value)}
+      inputProps={{
+        maxLength: 18,
+      }}
     />
     <IconButton sx={{ color: "#8a0303" }} onClick={() => handleToggleEditMode(index)}>
       <CheckIcon />
@@ -341,7 +293,7 @@ const handleSocialProfileChange = async (index, newValue) => {
 
 {/* Render the URL in non-edit mode */}
 {!editMode[index] && user.socialProfiles && user.socialProfiles[index] && (
-  <a href={user.socialProfiles[index].url && typeof user.socialProfiles[index].url === 'object' ? user.socialProfiles[index].url.url : user.socialProfiles[index].url} target="_blank" rel="noopener noreferrer">
+  <a href={user.socialProfiles[index].url && typeof user.socialProfiles[index].url === 'object' ? user.socialProfiles[index].url.url : user.socialProfiles[index].url} target="_blank" rel="noopener noreferrer" className="noUnderline">
     {user.socialProfiles[index].url && typeof user.socialProfiles[index].url === 'object' ? user.socialProfiles[index].url.url : user.socialProfiles[index].url}
   </a>
 )}

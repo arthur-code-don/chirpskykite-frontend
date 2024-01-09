@@ -94,3 +94,7 @@ strong:hover{
 button a.buy-with-crypto {
   font-family: "Mortal Kombat 4";
 }
+
+.noUnderline {
+  text-decoration: none;
+}

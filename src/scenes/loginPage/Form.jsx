@@ -111,23 +111,27 @@ const Form = () => {
           body: formData,
         }
       );
+
+      if (!savedUserResponse.ok) {
+        // If response status is not OK, throw an error with the response details
+        throw await savedUserResponse.json();
+      }
+
       const savedUser = await savedUserResponse.json();
       onSubmitProps.resetForm();
   
-      if (savedUser) {
-        dispatch(showSnackbar({ severity: "success", message: "Registration Successful!" }));
-        onSubmitProps.resetForm();
-        setPageType("login");
-      } else if (savedUser.errorCode === "Registration failed. User Already Exists. Please try again.") {
-        dispatch(showSnackbar({ severity: "error", message: "Registration failed. User Already Exists. Please try again." }));
-      } else {
-        // If response status is not OK and no specific error code, throw an error with the response details
-        throw savedUser;
-      }
+      dispatch(showSnackbar({ severity: "success", message: "Registration Successful!" }));
+      onSubmitProps.resetForm();
+      setPageType("login");
     } catch (error) {
       // Handle registration error
       console.error("Registration failed:", error);
-      dispatch(showSnackbar({ severity: "error", message: "Registration failed. User Already Exists. Please try again." }));
+  
+      if (error.errorCode === "Registration failed. User Already Exists. Please try again.") {
+        dispatch(showSnackbar({ severity: "error", message: "Registration failed. User Already Exists. Please try again." }));
+      } else {
+        dispatch(showSnackbar({ severity: "error", message: "Registration failed. Please try again." }));
+      }
     }
   };
   
@@ -140,11 +144,17 @@ const Form = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values)
       });
+
+      if (!loggedInResponse.ok) {
+        // If response status is not OK, throw an error with the response details
+        throw await loggedInResponse.json();
+      }
+  
       // console.log("Response Status:", loggedInResponse.status);
   
       const loggedIn = await loggedInResponse.json();
       onSubmitProps.resetForm();
-      if (loggedIn) {
+      // if (loggedIn) {
         dispatch(
           setLogin({
             user: loggedIn.user,
@@ -153,10 +163,10 @@ const Form = () => {
         );
         dispatch(showSnackbar({ severity: "success", message: "Login Successful!" }));
         navigate("/home");
-      } else {
-        // If response status is not OK, throw an error with the response details
-        throw loggedIn;
-      }
+      // } else {
+      //   // If response status is not OK, throw an error with the response details
+      //   throw loggedIn;
+      // }
     } catch (error) {
       // Handle login error
       console.error("Login failed:", error);

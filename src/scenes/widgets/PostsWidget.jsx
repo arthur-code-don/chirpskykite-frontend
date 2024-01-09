@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 import { format } from "date-fns";
+import Linkify from 'react-linkify';
+import LinkPreview from '@ashwamegh/react-link-preview'
+import '../../index.css';
 
 // ADD ROUTE FOR VIDEO ALSO
 const PostsWidget = ({ userId, isProfile = false }) => {
@@ -10,6 +13,8 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
 
+
+  
   const getPosts = async () => {
     const response = await fetch("https://chirpskykite-server.onrender.com/posts", {
       method: "GET",
@@ -89,7 +94,17 @@ const PostsWidget = ({ userId, isProfile = false }) => {
               postUserId={userId}
               name={`${firstName} ${lastName}`}
               username={`${username}`}
-              description={description}
+              description={
+                <Linkify
+                  componentDecorator={(decoratedHref, decoratedText, key) => (
+                    <a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key} className="noUnderline">
+                      {decoratedText}
+                    </a>
+                  )}
+                >
+                  {description}
+                </Linkify>
+              }
               location={location}
               picturePath={picturePath}
               videoPath={videoPath}
@@ -115,6 +130,8 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         
         
       )}
+
+      
       
       
     </>
